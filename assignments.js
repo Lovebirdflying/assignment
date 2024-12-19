@@ -316,11 +316,35 @@ else if(details === 'hungerLevel'){
 
 }
 }
+
+Pet.prototype.age = 0;
+
 const Pet1 = new Pet('Rat', 'Mammacat', '6')
+const Pet2 = new Pet('dog', 'BIGCAT', '4' )
+console.log( Pet1.age = 20)
 console.log(Pet1)
 console.log(Pet1.PetDetails('hungerLevel'))
 
-Pet1.hungry()
+function compare(PetA, PetB){
+
+    if(!PetA || !PetB){
+
+        return 'provide valid pair to compare '
+    } 
+    
+ if(PetA.name === PetB.name && PetA.species === PetB.species && PetA.hungerLevel === PetB.hungerLevel){
+
+    return ` Yes Both ${PetA.name} and ${PetB.name} are the same`
+ }
+ else{ 
+    return `compared ${PetA.name} & ${PetB.name}  pets are not the same`
+ }
+    
+
+}
+
+console.log(compare(Pet1, Pet2))
+
 
 // 8. Create a Library object with methods to add and get book details.
 
@@ -343,12 +367,21 @@ function Library(name, ListOfBooks = [] ){
     
 }
 
+ Library.prototype.showbook = function(){
+
+    return `here is the book list: ${this.ListOfBooks.map( book => book.title).join(',')}`
+ }
+
+
 const NBook = new Library('Things')
 console.log(NBook);
+
 
 NBook.addBook('HANG MAN')
 NBook.addBook('Be There')
 console.log(NBook.LibraryDetails());
+console.log(NBook.showbook())
+
 
 
 
@@ -412,3 +445,146 @@ Nlog.logWorkout('Morning STrentch');
 
 console.log(Nlog)
 console.log(Nlog.trackerDetail())
+
+
+/* 
+
+Function as arguement: 
+Function can be pass to another function as an argument, it makes the code flexible and reusable.
+Example: writing a function that great, instead of writing greeting function for everyone, you can use function as an input and make it reusable. 
+
+*/
+
+function sayHello(name){
+    console.log(`Hello ${name}!`)
+}
+
+function sayGoodbye(name){
+    console.log(`GoodBye, please come back again ${name}!`)
+}
+
+function greet(name, callback){
+    callback(name)// use the function passed as an argument
+}
+
+greet('Mr Prince', sayHello)
+greet('Miss Rose', sayGoodbye)
+
+/* sayHello and sayGoodbye are functions.
+greet is a higher-order function because it takes another function as input.
+You can pass different greeting functions (sayHello or sayGoodbye) to make greet flexible.
+*/
+
+function double(num){
+    return num * 2
+}
+
+function square(num){
+    return num*num
+}
+
+function processinNumb(numbers, operation){
+
+    return numbers.map(operation) // applying operationto each numb     
+
+}
+
+const numbers =[1, 2, 3, 4, 5]
+console.log(processinNumb(numbers, double))
+console.log(processinNumb(numbers, square))
+
+/*
+double and square are functions passed as arguments.
+processNumbers applies the passed function (operation) to each number in the array.
+*/
+
+// 2. call back function is a function you pass to another function to be call later after a certain task as been completed
+
+function greet(name){
+    console.log(`Hello, ${name}!`)
+}
+
+function processingUser(callback){
+    const userName = "Ganiyu";
+     callback(userName)//callback function passed as an argument 
+}
+
+processingUser(greet)
+
+function showMessage(){
+    console.log(`3 second have passaged !`)
+}
+
+setTimeout(showMessage, 3000) // call  the function  after 3000 milliseconds
+/*
+greet  is the  callback function
+processUser calls greet  with  the users name when its ready
+*/
+
+// 3. A closure  is a feature  in programming  where a function  retain  access  to the variables  of it outer scope even  after the outer function has finish running 
+
+
+
+function outerFunction(){
+    let outerVariables = "I'm from the  outer function"
+
+    function innerFunction(){
+        console.log(outerVariables) // access outerVariable 
+    }
+
+    return innerFunction
+}
+
+const closureFunction = outerFunction()// outerfunction runs and return innterFunction
+
+closureFunction()
+
+
+
+/* 
+innerFunction is a closure.
+It retains access to outerVariable even though outerFunction has finished running.
+
+*/
+
+// another closure example
+
+function createCOunter(){
+    let count = 0  //variable private
+
+    return function(){
+        count++
+        console.log(count)
+    }
+}
+
+const counter = createCOunter()
+ counter()
+counter()
+counter()
+
+//4. This a function that takes another function as argument or return a new function as a result. This makes higher functions incredibly powerful  and flexible  because  they allow  you to write  reusable, modular and customize code.
+
+function  calculate(number, operation){
+    return operation(number); // call the function passed as an argument 
+
+}
+
+function double(x){
+
+    return x * 2
+}
+
+function square(x){
+    
+    return x * x;
+}
+
+console.log(calculate(9, double))
+console.log(calculate(4, square))
+
+/*  
+
+calculate is the higher-order function because it takes a function (operation) as an argument.
+You can pass different functions like double or square to customize its behavior.
+*/
